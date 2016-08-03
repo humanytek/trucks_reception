@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <!--- TODO [IMP] -->
+        <menuitem id="menu_receptions"
+            parent="stock.menu_stock_root"
+            name="Receptions"
+            sequence="2"/>
+
+        <menuitem
+            id="menu_action_trucks_reception_form"
+            parent="menu_receptions"
+            action="trucks_reception_list_action"/>
     </data>
 </openerp>
