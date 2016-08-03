@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="trucks_reception_form_view">
+            <field name="name">trucks.reception.form</field>
+            <field name="model">trucks.reception</field>
+            <field name="arch" type="xml">
+                <form string="Trucks Reception Form">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="contract"/>
+                                <field name="number"/>
+                                <field name="street"/>
+                            </group>
+                            <group>
+                                <field name="driver"/>
+                                <field name="car_plates"/>
+                            </group>
+                        </group>
+                        <field name="contract_type"/>
+                        <group col="3">
+                            <field name="hired"/>
+                            <field name="delivered"/>
+                            <field name="pending"/>
+                        </group>
+                        <group>
+                            <field name="product"/>
+                            <field name="dest"/>
+                            <field name="location"/>
+                        </group>
+                        <button type="object" string="Update"/>
+                        <group col="3">
+                                <group>
+                                    <field name="humidity"/>
+                                    <field name="density"/>
+                                    <field name="temperature"/>
+                                </group>
+                            <group>
+                                <field name="damaged"/>
+                                <field name="broken"/>
+                                <field name="impurities"/>
+                            </group>
+                            <group>
+                                <field name="transgenic"/>
+                                <field name="other_specs"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="ticket"/>
+                        </group>
+                        <group>
+                            <group>
+                                <group>
+                                    <button type="object" string="Input"/>
+                                    <button type="object" string="Output"/>
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="weight_input"/>
+                                <field name="weight_output"/>
+                                <field name="weight_neto"/>
+                            </group>
+                            <group>
+                                <field name="kilos_damaged"/>
+                                <field name="kilos_broken"/>
+                                <field name="kilos_impurities"/>
+                                <field name="kilos_humidity"/>
+                                <field name="weight_neto_analized"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="trucks_reception_tree_view">
+            <field name="name">trucks.reception.tree</field>
+            <field name="model">trucks.reception</field>
+            <field name="arch" type="xml">
+                <tree string="Trucks Reception Tree">
+                    <!-- TODO -->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="trucks_reception_list_action">
+            <field name="name">Trucks Reception</field>
+            <field name="res_model">trucks.reception</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create the first truck reception
+                </p>
+            </field>
+        </record>
+
         <menuitem id="menu_receptions"
             parent="stock.menu_stock_root"
             name="Receptions"
