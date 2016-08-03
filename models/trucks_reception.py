@@ -44,3 +44,54 @@ class TrucksReception(models.Model):
     kilos_impurities = fields.Float(compute="_compute_kilos_impurities", store=False)
     kilos_humidity = fields.Float(compute="_compute_kilos_humidity", store=False)
     weight_neto_analized = fields.Float(compute="_compute_weight_neto_analized", store=False)
+
+    @api.depends('weight_input', 'weight_output')
+    def _compute_weight_neto(self):
+        self.weight_neto = self.weight_input - self.weight_output
+
+    @api.depends('weight_neto', 'damaged')
+    def _compute_kilos_damaged(self):
+        if self.damaged > 5:
+            self.kilos_damaged = ((self.damaged - 5) / 10) * self.weight_neto
+        else:
+            self.kilos_damaged = 0
+
+    @api.depends('weight_neto', 'broken')
+    def _compute_kilos_broken(self):
+        if self.broken > 2:
+            self.kilos_broken = ((self.broken - 2) / 10) * self.weight_neto
+        else:
+            self.kilos_broken = 0
+
+    @api.depends('weight_neto', 'impurities')
+    def _compute_kilos_impurities(self):
+        if self.impurities > 2:
+            self.kilos_impurities = ((self.impurities - 2) / 10) * self.weight_neto
+        else:
+            self.kilos_impurities = 0
+
+    @api.depends('weight_neto', 'humidity')
+    def _compute_kilos_humidity(self):
+        if self.humidity > 14:
+            self.kilos_humidity = ((self.humidity - 14) * .116) * self.weight_neto
+        else:
+            self.kilos_humidity = 0
+
+    @api.constrains('humidity')
+    def _constrains_humidity(self):
+        if self.humidity >= 17:
+            raise exceptions.ValidationError(_('Can not accept that product, humidity over 17'))
+
+    @api.onchange('humidity')
+    def _onchange_humidity(self):
+        if self.humidity >= 16 and self.humidity < 17:
+            return {
+                'warning': {
+                    'title': _('Humidity high'),
+                    'message': _('Can not storage that product, humidity over 16')
+                }
+            }
+
+    @api.depends('weight_neto', 'kilos_damaged', 'kilos_broken', 'kilos_impurities', 'kilos_humidity')
+    def _compute_weight_neto_analized(self):
+        self.weight_neto_analized = self.weight_neto - self.kilos_damaged - self.kilos_broken - self.kilos_impurities - self.kilos_humidity
