@@ -4,6 +4,16 @@ from openerp import _, api, exceptions, fields, models
 class TrucksReception(models.Model):
     _name = 'trucks.reception'
 
+    name = fields.Char()
+
+    state = fields.Selection([
+        ('analysis', 'Analysis'),
+        ('weight_input', 'Weight Input'),
+        ('unloading', 'Unloading'),
+        ('weight_output', 'Weight Output'),
+        ('done', 'Done'),
+    ])
+
     contract = fields.Many2one('purchase.order')  # TODO Check ID
     number = fields.Many2one('res.partner')  # TODO
     street = fields.Char(readonly=True, related='number.street')
@@ -44,6 +54,8 @@ class TrucksReception(models.Model):
     kilos_impurities = fields.Float(compute="_compute_kilos_impurities", store=False)
     kilos_humidity = fields.Float(compute="_compute_kilos_humidity", store=False)
     weight_neto_analized = fields.Float(compute="_compute_weight_neto_analized", store=False)
+
+    _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
 
     @api.depends('weight_input', 'weight_output')
     def _compute_weight_neto(self):
@@ -95,3 +107,23 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'kilos_damaged', 'kilos_broken', 'kilos_impurities', 'kilos_humidity')
     def _compute_weight_neto_analized(self):
         self.weight_neto_analized = self.weight_neto - self.kilos_damaged - self.kilos_broken - self.kilos_impurities - self.kilos_humidity
+
+    @api.multi
+    def action_analysis(self):
+        self.state = 'analysis'
+
+    @api.multi
+    def action_weight_input(self):
+        self.state = 'weight_input'
+
+    @api.multi
+    def action_unloading(self):
+        self.state = 'unloading'
+
+    @api.multi
+    def action_weight_output(self):
+        self.state = 'weight_output'
+
+    @api.multi
+    def action_done(self):
+        self.state = 'done'
