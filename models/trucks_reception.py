@@ -42,9 +42,6 @@ class TrucksReception(models.Model):
     transgenic = fields.Float(min_value=0)
 
     ticket = fields.Char()
-    other_specs = fields.Selection([
-        # TODO
-    ])
 
     weight_input = fields.Float(min_value=0)
     weight_output = fields.Float(min_value=0)
