@@ -3,6 +3,7 @@ from openerp import _, api, exceptions, fields, models
 
 class TrucksReception(models.Model):
     _name = 'trucks.reception'
+    _inherit = ['mail.thread']
 
     name = fields.Char()
 
