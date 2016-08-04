@@ -13,13 +13,13 @@ class TrucksReception(models.Model):
         ('unloading', 'Unloading'),
         ('weight_output', 'Weight Output'),
         ('done', 'Done'),
-    ])
+    ], default='analysis')
 
-    contract = fields.Many2one('purchase.order')  # TODO Check ID
+    contract = fields.Many2one('purchase.order')
     number = fields.Many2one('res.partner')  # TODO
     street = fields.Char(readonly=True, related='number.street')
 
-    driver = fields.Many2one('res.partner')
+    driver = fields.Char()
     car_plates = fields.Char()
 
     contract_type = fields.Selection(readonly=True, related="contract.contract_type")
@@ -41,7 +41,7 @@ class TrucksReception(models.Model):
 
     transgenic = fields.Float(min_value=0)
 
-    ticket = fields.Integer()
+    ticket = fields.Char()
     other_specs = fields.Selection([
         # TODO
     ])
