@@ -30,7 +30,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="contract" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="contract_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 <field name="number" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 <field name="street"/>
                             </group>
@@ -58,9 +58,9 @@
                             </group>
                         </group>
                         <group>
-                            <field name="product" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
-                            <field name="dest" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
-                            <field name="location" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                            <field name="product_id"/>
+                            <field name="dest"/>
+                            <field name="location"/>
                         </group>
                         <button type="object" string="Update" states="analysis" class="oe_highlight"/>
                         <group col="3">
@@ -119,7 +119,8 @@
             <field name="arch" type="xml">
                 <tree string="Trucks Reception Tree">
                     <field name="name"/>
-                    <field name="contract"/>
+                    <field name="contract_id"/>
+                    <field name="product_id"/>
                     <field name="state"/>
                 </tree>
             </field>

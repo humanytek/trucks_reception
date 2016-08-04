@@ -15,20 +15,20 @@ class TrucksReception(models.Model):
         ('done', 'Done'),
     ], default='analysis')
 
-    contract = fields.Many2one('purchase.order')
+    contract_id = fields.Many2one('purchase.order')
     number = fields.Many2one('res.partner')  # TODO
     street = fields.Char(readonly=True, related='number.street')
 
     driver = fields.Char()
     car_plates = fields.Char()
 
-    contract_type = fields.Selection(readonly=True, related="contract.contract_type")
-    hired = fields.Float(readonly=True)  # TODO Related with contract
-    delivered = fields.Float(readonly=True)  # TODO
-    pending = fields.Float(readonly=True)  # TODO
+    contract_type = fields.Selection(readonly=True, related="contract_id.contract_type")
+    hired = fields.Float(readonly=True, compute="_compute_hired", store=False)
+    delivered = fields.Float(readonly=True, compute="_compute_delivered", store=False)
+    pending = fields.Float(readonly=True, compute="_compute_pending", store=False)
 
-    product = fields.Many2one('product.product')
-    dest = fields.Many2one('stock.location')
+    product_id = fields.Many2one('product.product', compute="_compute_product_id", store=False, readonly=True)
+    dest = fields.Many2one('stock.location', related="contract_id.location_id", readonly=True)
     location = fields.Many2one('stock.location')
 
     humidity = fields.Float(min_value=0)
@@ -128,3 +128,23 @@ class TrucksReception(models.Model):
     @api.multi
     def action_done(self):
         self.state = 'done'
+
+    @api.depends('contract_id')
+    def _compute_hired(self):
+        self.hired = sum(line.product_qty for line in self.contract_id.order_line)
+
+    @api.depends('contract_id', 'weight_neto')
+    def _compute_delivered(self):
+        self.delivered = 0  # TODO
+
+    @api.depends('contract_id')
+    def _compute_pending(self):
+        self.pending = self.hired - self.delivered
+
+    @api.depends('contract_id')
+    def _compute_product_id(self):
+        product_id = False
+        for line in self.contract_id.order_line:
+            product_id = line.product_id
+            break
+        self.product_id = product_id
