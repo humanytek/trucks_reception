@@ -125,6 +125,26 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="trucks_reception_search_view">
+            <field name="name">trucks.reception.search</field>
+            <field name="model">trucks.reception</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="analysis" string="Analysis" domain="[('state','in',('analysis'))]"/>
+                    <filter name="weight_input" string="Weight input" domain="[('state','in',('weight_input'))]"/>
+                    <filter name="unloading" string="Unloading" domain="[('state','in',('unloading'))]"/>
+                    <filter name="weight_output" string="Weight output" domain="[('state','in',('weight_output'))]"/>
+                    <filter name="done" string="Done" domain="[('state','in',('done'))]"/>
+                    <separator/>
+                    <group string="Group By">
+                        <filter name="group_by_state" string="State"
+                                context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
         <record model="ir.actions.act_window" id="trucks_reception_list_action">
             <field name="name">Trucks Reception</field>
             <field name="res_model">trucks.reception</field>
