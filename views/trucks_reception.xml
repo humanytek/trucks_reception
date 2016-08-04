@@ -18,6 +18,7 @@
             <field name="arch" type="xml">
                 <form string="Trucks Reception Form">
                     <header>
+                        <button type="object" string="Unload" states="unloading" class="oe_highlight"/>
                         <field name="state" widget="statusbar" clickable="1"/>
                     </header>
                     <sheet>
@@ -29,13 +30,13 @@
                         </div>
                         <group>
                             <group>
-                                <field name="contract"/>
-                                <field name="number"/>
+                                <field name="contract" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="number" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 <field name="street"/>
                             </group>
                             <group>
-                                <field name="driver"/>
-                                <field name="car_plates"/>
+                                <field name="driver" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="car_plates" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                             </group>
                         </group>
                         <group col="4">
@@ -57,39 +58,39 @@
                             </group>
                         </group>
                         <group>
-                            <field name="product"/>
-                            <field name="dest"/>
-                            <field name="location"/>
+                            <field name="product" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                            <field name="dest" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                            <field name="location" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                         </group>
-                        <button type="object" string="Update"/>
+                        <button type="object" string="Update" states="analysis" class="oe_highlight"/>
                         <group col="3">
                                 <group>
-                                    <field name="humidity"/>
-                                    <field name="density"/>
-                                    <field name="temperature"/>
+                                    <field name="humidity" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                    <field name="density" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                    <field name="temperature" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 </group>
                             <group>
-                                <field name="damaged"/>
-                                <field name="broken"/>
-                                <field name="impurities"/>
+                                <field name="damaged" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="broken" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="impurities" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                             </group>
                             <group>
-                                <field name="transgenic"/>
-                                <field name="other_specs"/>
+                                <field name="transgenic" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="other_specs" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                             </group>
                         </group>
                         <group>
-                            <field name="ticket"/>
+                            <field name="ticket" attrs="{'readonly':[('state', 'not in', ['weight_input'])], 'required':[('state', 'in', ['weight_input'])]}"/>
                         </group>
                         <group>
                             <group col="1">
                                 <group col="3">
-                                    <field name="weight_input"/>
-                                    <button type="object" string="Update"/>
+                                    <field name="weight_input" attrs="{'readonly':[('state', 'not in', ['weight_input'])], 'required':[('state', 'in', ['weight_input'])]}"/>
+                                    <button type="object" string="Update" states="weight_input" class="oe_highlight"/>
                                 </group>
                                 <group col="3">
-                                    <field name="weight_output"/>
-                                    <button type="object" string="Update"/>
+                                    <field name="weight_output" attrs="{'readonly':[('state', 'not in', ['weight_output'])], 'required':[('state', 'in', ['weight_output'])]}"/>
+                                    <button type="object" string="Update" states="weight_output" class="oe_highlight"/>
                                 </group>
                                 <group>
                                     <field name="weight_neto"/>
