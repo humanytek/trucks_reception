@@ -138,6 +138,7 @@ class TrucksReception(models.Model):
     def _compute_pending(self):
         self.pending = self.hired - self.delivered
 
+    @api.one
     @api.depends('contract_id')
     def _compute_product_id(self):
         product_id = False
