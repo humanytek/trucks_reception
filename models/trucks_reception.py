@@ -55,10 +55,12 @@ class TrucksReception(models.Model):
 
     _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
 
+    @api.one
     @api.depends('weight_input', 'weight_output')
     def _compute_weight_neto(self):
         self.weight_neto = self.weight_input - self.weight_output
 
+    @api.one
     @api.depends('weight_neto', 'damaged')
     def _compute_kilos_damaged(self):
         if self.damaged > 5:
@@ -66,6 +68,7 @@ class TrucksReception(models.Model):
         else:
             self.kilos_damaged = 0
 
+    @api.one
     @api.depends('weight_neto', 'broken')
     def _compute_kilos_broken(self):
         if self.broken > 2:
@@ -73,6 +76,7 @@ class TrucksReception(models.Model):
         else:
             self.kilos_broken = 0
 
+    @api.one
     @api.depends('weight_neto', 'impurities')
     def _compute_kilos_impurities(self):
         if self.impurities > 2:
@@ -80,6 +84,7 @@ class TrucksReception(models.Model):
         else:
             self.kilos_impurities = 0
 
+    @api.one
     @api.depends('weight_neto', 'humidity')
     def _compute_kilos_humidity(self):
         if self.humidity > 14:
@@ -102,6 +107,7 @@ class TrucksReception(models.Model):
                 }
             }
 
+    @api.one
     @api.depends('weight_neto', 'kilos_damaged', 'kilos_broken', 'kilos_impurities', 'kilos_humidity')
     def _compute_weight_neto_analized(self):
         self.weight_neto_analized = self.weight_neto - self.kilos_damaged - self.kilos_broken - self.kilos_impurities - self.kilos_humidity
@@ -126,14 +132,17 @@ class TrucksReception(models.Model):
     def action_done(self):
         self.state = 'done'
 
+    @api.one
     @api.depends('contract_id')
     def _compute_hired(self):
         self.hired = sum(line.product_qty for line in self.contract_id.order_line)
 
+    @api.one
     @api.depends('contract_id', 'weight_neto')
     def _compute_delivered(self):
-        self.delivered = 0  # TODO
+        self.delivered = sum(record.weight_neto for record in self.contract_id.trucks_reception_ids)
 
+    @api.one
     @api.depends('contract_id')
     def _compute_pending(self):
         self.pending = self.hired - self.delivered
