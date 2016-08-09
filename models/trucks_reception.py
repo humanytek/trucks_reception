@@ -16,8 +16,8 @@ class TrucksReception(models.Model):
     ], default='analysis')
 
     contract_id = fields.Many2one('purchase.order')
-    number = fields.Many2one('res.partner')  # TODO
-    street = fields.Char(readonly=True, related='number.street')
+    partner_id = fields.Many2one('res.partner', related="contract_id.partner_id", readonly=True)  # TODO
+    street = fields.Char(readonly=True, related='partner_id.street')
 
     driver = fields.Char()
     car_plates = fields.Char()

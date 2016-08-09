@@ -31,7 +31,7 @@
                         <group>
                             <group>
                                 <field name="contract_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
-                                <field name="number" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                <field name="partner_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 <field name="street"/>
                             </group>
                             <group>
