@@ -64,7 +64,7 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'damaged')
     def _compute_kilos_damaged(self):
         if self.damaged > 5:
-            self.kilos_damaged = ((self.damaged - 5) / 10) * self.weight_neto
+            self.kilos_damaged = ((self.damaged - 5) / 1000) * self.weight_neto
         else:
             self.kilos_damaged = 0
 
@@ -72,7 +72,7 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'broken')
     def _compute_kilos_broken(self):
         if self.broken > 2:
-            self.kilos_broken = ((self.broken - 2) / 10) * self.weight_neto
+            self.kilos_broken = ((self.broken - 2) / 1000) * self.weight_neto
         else:
             self.kilos_broken = 0
 
@@ -80,7 +80,7 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'impurities')
     def _compute_kilos_impurities(self):
         if self.impurities > 2:
-            self.kilos_impurities = ((self.impurities - 2) / 10) * self.weight_neto
+            self.kilos_impurities = ((self.impurities - 2) / 1000) * self.weight_neto
         else:
             self.kilos_impurities = 0
 
@@ -88,7 +88,7 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'humidity')
     def _compute_kilos_humidity(self):
         if self.humidity > 14:
-            self.kilos_humidity = ((self.humidity - 14) * .116) * self.weight_neto
+            self.kilos_humidity = ((self.humidity - 14) * .00116) * self.weight_neto
         else:
             self.kilos_humidity = 0
 
@@ -135,7 +135,7 @@ class TrucksReception(models.Model):
     @api.one
     @api.depends('contract_id')
     def _compute_hired(self):
-        self.hired = sum(line.product_qty for line in self.contract_id.order_line)
+        self.hired = sum(line.product_qty for line in self.contract_id.order_line) * 1000
 
     @api.one
     @api.depends('contract_id', 'weight_neto')
