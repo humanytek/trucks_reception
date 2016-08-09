@@ -88,7 +88,7 @@ class TrucksReception(models.Model):
     @api.depends('weight_neto', 'humidity')
     def _compute_kilos_humidity(self):
         if self.humidity > 14:
-            self.kilos_humidity = ((self.humidity - 14) * .00116) * self.weight_neto
+            self.kilos_humidity = ((self.humidity - 14) * .0116) * self.weight_neto
         else:
             self.kilos_humidity = 0
 
