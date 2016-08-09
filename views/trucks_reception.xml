@@ -19,7 +19,7 @@
                 <form string="Trucks Reception Form">
                     <header>
                         <button type="object" string="Unload" states="unloading" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" clickable="1"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -122,6 +122,18 @@
                     <field name="product_id"/>
                     <field name="state"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="trucks_reception_form_view_permissions">
+            <field name="name">trucks.reception.form</field>
+            <field name="model">trucks.reception</field>
+            <field name="inherit_id" ref="trucks_reception_form_view"/>
+            <field name="groups_id" eval="[(6,0, [ref('group_trucks_reception')])]" />
+            <field name="arch" type="xml">
+                <field name="state" position="attributes">
+                    <attribute name="clickable">1</attribute>
+                </field>
             </field>
         </record>
 
