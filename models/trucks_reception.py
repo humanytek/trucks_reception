@@ -112,26 +112,6 @@ class TrucksReception(models.Model):
     def _compute_weight_neto_analized(self):
         self.weight_neto_analized = self.weight_neto - self.kilos_damaged - self.kilos_broken - self.kilos_impurities - self.kilos_humidity
 
-    @api.multi
-    def action_analysis(self):
-        self.state = 'analysis'
-
-    @api.multi
-    def action_weight_input(self):
-        self.state = 'weight_input'
-
-    @api.multi
-    def action_unloading(self):
-        self.state = 'unloading'
-
-    @api.multi
-    def action_weight_output(self):
-        self.state = 'weight_output'
-
-    @api.multi
-    def action_done(self):
-        self.state = 'done'
-
     @api.one
     @api.depends('contract_id')
     def _compute_hired(self):
