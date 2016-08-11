@@ -29,21 +29,22 @@
                             </h1>
                         </div>
                         <group>
-                            <group>
-                                <field name="contract_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
-                                <field name="partner_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
-                                <field name="street"/>
+                            <group col="1">
+                                <group col="3">
+                                    <field name="contract_id" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
+                                    <field name="contract_type" nolabel="1" class="oe_inline"/>
+                                </group>
+                                <group>
+                                    <field name="partner_id"/>
+                                    <field name="street"/>
+                                </group>
                             </group>
                             <group>
                                 <field name="driver" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                                 <field name="car_plates" required="1" attrs="{'readonly':[('state', 'not in', ['analysis'])]}"/>
                             </group>
                         </group>
-                        <group col="4">
-                            <group col="1">
-                                <label for="contract_type" string="Contract Type"/>
-                                <field name="contract_type" class="oe_inline" nolabel="1"/>
-                            </group>
+                        <group col="3">
                             <group col="1">
                                 <label for="hired" string="Hired"/>
                                 <field name="hired" class="oe_inline" nolabel="1"/>

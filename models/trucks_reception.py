@@ -16,13 +16,13 @@ class TrucksReception(models.Model):
     ], default='analysis')
 
     contract_id = fields.Many2one('purchase.order')
-    partner_id = fields.Many2one('res.partner', related="contract_id.partner_id", readonly=True)  # TODO
+    contract_type = fields.Selection(readonly=True, related="contract_id.contract_type")
+    partner_id = fields.Many2one('res.partner', related="contract_id.partner_id", readonly=True)
     street = fields.Char(readonly=True, related='partner_id.street')
 
     driver = fields.Char()
     car_plates = fields.Char()
 
-    contract_type = fields.Selection(readonly=True, related="contract_id.contract_type")
     hired = fields.Float(readonly=True, compute="_compute_hired", store=False)
     delivered = fields.Float(readonly=True, compute="_compute_delivered", store=False)
     pending = fields.Float(readonly=True, compute="_compute_pending", store=False)
