@@ -18,7 +18,7 @@
             <field name="arch" type="xml">
                 <form string="Trucks Reception Form">
                     <header>
-                        <button type="object" string="Unload" states="unloading" class="oe_highlight"/>
+                        <button name="fun_unload" type="object" string="Unload" states="unloading" class="oe_highlight"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>

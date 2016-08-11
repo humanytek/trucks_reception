@@ -155,3 +155,7 @@ class TrucksReception(models.Model):
             product_id = line.product_id
             break
         self.product_id = product_id
+
+    @api.one
+    def fun_unload(self):
+        self.state = 'weight_output'
