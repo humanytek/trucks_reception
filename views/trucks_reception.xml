@@ -146,11 +146,11 @@
             <field name="model">trucks.reception</field>
             <field name="arch" type="xml">
                 <search>
-                    <filter name="analysis" string="Analysis" domain="[('state','in',('analysis'))]"/>
-                    <filter name="weight_input" string="Weight input" domain="[('state','in',('weight_input'))]"/>
-                    <filter name="unloading" string="Unloading" domain="[('state','in',('unloading'))]"/>
-                    <filter name="weight_output" string="Weight output" domain="[('state','in',('weight_output'))]"/>
-                    <filter name="done" string="Done" domain="[('state','in',('done'))]"/>
+                    <filter name="analysis" string="Analysis" domain="[('state', '=', 'analysis')]"/>
+                    <filter name="weight_input" string="Weight input" domain="[('state', '=', 'weight_input')]"/>
+                    <filter name="unloading" string="Unloading" domain="[('state', '=', 'unloading')]"/>
+                    <filter name="weight_output" string="Weight output" domain="[('state', '=', 'weight_output')]"/>
+                    <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
                     <separator/>
                     <group string="Group By">
                         <filter name="group_by_state" string="State"
