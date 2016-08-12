@@ -19,7 +19,7 @@
                 <form string="Trucks Reception Form">
                     <header>
                         <button name="fun_unload" type="object" string="Unload" states="unloading" class="oe_highlight"/>
-                        <field name="state" widget="statusbar"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -103,6 +103,9 @@
                                 <field name="kilos_humidity"/>
                                 <field name="weight_neto_analized"/>
                             </group>
+                        </group>
+                        <group>
+                            <field name="stock_picking" attrs="{'invisible': [('state', 'not in', 'done')]}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">

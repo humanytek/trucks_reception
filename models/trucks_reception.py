@@ -53,6 +53,8 @@ class TrucksReception(models.Model):
     kilos_humidity = fields.Float(compute="_compute_kilos_humidity", store=False)
     weight_neto_analized = fields.Float(compute="_compute_weight_neto_analized", store=False)
 
+    stock_picking = fields.Many2one('stock.picking', readonly=True)
+
     _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
 
     @api.one
@@ -139,3 +141,10 @@ class TrucksReception(models.Model):
     @api.one
     def fun_unload(self):
         self.state = 'weight_output'
+
+    @api.multi
+    def write(self, values, context=None):
+        res = super(TrucksReception, self).write(values)
+        if self.state == 'done':
+            zxc = 'zxc' # TODO
+        return res
