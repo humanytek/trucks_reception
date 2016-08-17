@@ -155,7 +155,7 @@ msgstr "Pendiente"
 #. module: trucks_reception
 #: field:trucks.reception,product_id:0
 msgid "Product id"
-msgstr Producto"
+msgstr "Producto"
 
 #. module: trucks_reception
 #: model:ir.ui.menu,name:trucks_reception.menu_receptions
