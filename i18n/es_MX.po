@@ -248,31 +248,31 @@ msgstr "Actualizar"
 #. module: trucks_reception
 #: selection:trucks.reception,state:0
 msgid "Weight Input"
-msgstr "Peso de entrada"
+msgstr "Peso de entrada (kg)"
 
 #. module: trucks_reception
 #: selection:trucks.reception,state:0
 msgid "Weight Output"
-msgstr "Peso de salida"
+msgstr "Peso de salida (kg)"
 
 #. module: trucks_reception
 #: view:trucks.reception:trucks_reception.trucks_reception_search_view
 #: field:trucks.reception,weight_input:0
 msgid "Weight input"
-msgstr "Peso de entrada"
+msgstr "Peso de entrada (kg)"
 
 #. module: trucks_reception
 #: field:trucks.reception,weight_neto:0
 msgid "Weight neto"
-msgstr "Peso neto"
+msgstr "Peso neto (kg)"
 
 #. module: trucks_reception
 #: field:trucks.reception,weight_neto_analized:0
 msgid "Weight neto analized"
-msgstr "Peso neto analizado"
+msgstr "Peso neto analizado (kg)"
 
 #. module: trucks_reception
 #: view:trucks.reception:trucks_reception.trucks_reception_search_view
 #: field:trucks.reception,weight_output:0
 msgid "Weight output"
-msgstr "Peso de salida"
+msgstr "Peso de salida (kg)"
