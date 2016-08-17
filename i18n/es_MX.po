@@ -1,0 +1,278 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* trucks_reception
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-17 20:17+0000\n"
+"PO-Revision-Date: 2016-08-17 20:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: trucks_reception
+#: model:ir.actions.act_window,help:trucks_reception.trucks_reception_list_action
+msgid "<p class=\"oe_view_nocontent_create\">Create the first truck reception\n"
+"                </p>\n"
+"            "
+msgstr "<p class=\"oe_view_nocontent_create\">Crea la primer recepcion de camiones\n"
+"                </p>\n"
+"            "
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: selection:trucks.reception,state:0
+msgid "Analysis"
+msgstr "Analisis"
+
+#. module: trucks_reception
+#: field:trucks.reception,broken:0
+msgid "Broken"
+msgstr "Quebrado"
+
+#. module: trucks_reception
+#: code:addons/trucks_reception/models/trucks_reception.py:100
+#, python-format
+msgid "Can not accept that product, humidity over 17"
+msgstr "No se puede aceptar ese producto, humedad mayor a 17"
+
+#. module: trucks_reception
+#: code:addons/trucks_reception/models/trucks_reception.py:108
+#, python-format
+msgid "Can not storage that product, humidity over 16"
+msgstr "No se puede almacenar ese producto, humedad mayor a 16"
+
+#. module: trucks_reception
+#: field:trucks.reception,car_plates:0
+msgid "Car plates"
+msgstr "Placas"
+
+#. module: trucks_reception
+#: field:trucks.reception,contract_id:0
+msgid "Contract id"
+msgstr "Contrato"
+
+#. module: trucks_reception
+#: field:trucks.reception,contract_type:0
+msgid "Contract type"
+msgstr "Tipo de contrato"
+
+#. module: trucks_reception
+#: field:trucks.reception,damaged:0
+msgid "Damaged"
+msgstr "Dañado"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+#: field:trucks.reception,delivered:0
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: trucks_reception
+#: field:trucks.reception,density:0
+msgid "Density"
+msgstr "Densidad"
+
+#. module: trucks_reception
+#: field:trucks.reception,dest:0
+msgid "Destination"
+msgstr "Destino"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: selection:trucks.reception,state:0
+msgid "Done"
+msgstr "Hecho"
+
+#. module: trucks_reception
+#: field:trucks.reception,driver:0
+msgid "Driver"
+msgstr "Conductor"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+#: field:trucks.reception,hired:0
+msgid "Hired"
+msgstr "Contratado"
+
+#. module: trucks_reception
+#: field:trucks.reception,humidity:0
+msgid "Humidity"
+msgstr "Humedad"
+
+#. module: trucks_reception
+#: code:addons/trucks_reception/models/trucks_reception.py:107
+#, python-format
+msgid "Humidity high"
+msgstr "Humedad alta"
+
+#. module: trucks_reception
+#: field:trucks.reception,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: trucks_reception
+#: field:trucks.reception,impurities:0
+msgid "Impurities"
+msgstr "Impurezas"
+
+#. module: trucks_reception
+#: field:trucks.reception,kilos_broken:0
+msgid "Kilos broken"
+msgstr "Kilos quebrados"
+
+#. module: trucks_reception
+#: field:trucks.reception,kilos_damaged:0
+msgid "Kilos damaged"
+msgstr "Kilos dañados"
+
+#. module: trucks_reception
+#: field:trucks.reception,kilos_humidity:0
+msgid "Kilos humidity"
+msgstr "Kilos humedos"
+
+#. module: trucks_reception
+#: field:trucks.reception,kilos_impurities:0
+msgid "Kilos impurities"
+msgstr "Kilos impuros"
+
+#. module: trucks_reception
+#: field:trucks.reception,location:0
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+#: field:trucks.reception,pending:0
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: trucks_reception
+#: field:trucks.reception,product_id:0
+msgid "Product id"
+msgstr Producto"
+
+#. module: trucks_reception
+#: model:ir.ui.menu,name:trucks_reception.menu_receptions
+msgid "Receptions"
+msgstr "Recepciones"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: field:trucks.reception,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: trucks_reception
+#: field:trucks.reception,stock_picking:0
+msgid "Stock picking"
+msgstr "Recepción"
+
+#. module: trucks_reception
+#: field:trucks.reception,street:0
+msgid "Street"
+msgstr "Dirección"
+
+#. module: trucks_reception
+#: field:trucks.reception,partner_id:0
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: trucks_reception
+#: field:trucks.reception,temperature:0
+msgid "Temperature"
+msgstr "Temperatura"
+
+#. module: trucks_reception
+#: field:trucks.reception,ticket:0
+msgid "Ticket"
+msgstr "Ticket"
+
+#. module: trucks_reception
+#: field:trucks.reception,transgenic:0
+msgid "Transgenic"
+msgstr "Transgenico"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+msgid "Truck Reception"
+msgstr "Recepcion de camiones"
+
+#. module: trucks_reception
+#: model:ir.actions.act_window,name:trucks_reception.trucks_reception_list_action
+#: model:ir.ui.menu,name:trucks_reception.menu_action_trucks_reception_form
+msgid "Trucks Reception"
+msgstr "Recepcion de camiones"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+msgid "Trucks Reception Form"
+msgstr "Formulario de recepcion de camiones"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_tree_view
+msgid "Trucks Reception Tree"
+msgstr "Lista de recepcion de camiones"
+
+#. module: trucks_reception
+#: view:purchase.order:trucks_reception.purchase_order_trucks_reception
+msgid "Trucks reception"
+msgstr "Recepcion de camiones"
+
+#. module: trucks_reception
+#: model:res.groups,name:trucks_reception.group_trucks_reception
+msgid "Trucks/Reception"
+msgstr "Camiones/Recepcion"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+msgid "Unload"
+msgstr "Descargar"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: selection:trucks.reception,state:0
+msgid "Unloading"
+msgstr "Descargando"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_form_view
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: trucks_reception
+#: selection:trucks.reception,state:0
+msgid "Weight Input"
+msgstr "Peso de entrada"
+
+#. module: trucks_reception
+#: selection:trucks.reception,state:0
+msgid "Weight Output"
+msgstr "Peso de salida"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: field:trucks.reception,weight_input:0
+msgid "Weight input"
+msgstr "Peso de entrada"
+
+#. module: trucks_reception
+#: field:trucks.reception,weight_neto:0
+msgid "Weight neto"
+msgstr "Peso neto"
+
+#. module: trucks_reception
+#: field:trucks.reception,weight_neto_analized:0
+msgid "Weight neto analized"
+msgstr "Peso neto analizado"
+
+#. module: trucks_reception
+#: view:trucks.reception:trucks_reception.trucks_reception_search_view
+#: field:trucks.reception,weight_output:0
+msgid "Weight output"
+msgstr "Peso de salida"
