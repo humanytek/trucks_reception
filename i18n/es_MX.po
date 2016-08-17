@@ -264,12 +264,12 @@ msgstr "Peso de entrada (kg)"
 #. module: trucks_reception
 #: field:trucks.reception,weight_neto:0
 msgid "Weight neto"
-msgstr "Peso neto (kg)"
+msgstr "Peso neto"
 
 #. module: trucks_reception
 #: field:trucks.reception,weight_neto_analized:0
 msgid "Weight neto analized"
-msgstr "Peso neto analizado (kg)"
+msgstr "Peso neto analizado"
 
 #. module: trucks_reception
 #: view:trucks.reception:trucks_reception.trucks_reception_search_view
