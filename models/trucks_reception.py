@@ -141,17 +141,27 @@ class TrucksReception(models.Model):
     def fun_unload(self):
         self.state = 'weight_output'
 
-    # @api.one
-    def fun_finalize(self, cr, uid, ids, context=None):
-        for record in self.browse(cr, uid, ids, context=context):
-                self.write(cr, uid, ids, {'state': 'done'}, context=context)
-                picking_vals = {
-                    'picking_type_id': record.contract_id.picking_type_id.id,
-                    'partner_id': record.contract_id.partner_id.id,
-                    'date': record.contract_id.date_order,
-                    'origin': record.contract_id.name
-                }
-                picking_id = self.pool.get('stock.picking').create(cr, uid, picking_vals, context=context)
-                self.write(cr, uid, ids, {'stock_picking_id': picking_id}, context=context)
-                self.pool.get('purchase.order')._create_stock_moves(cr, uid, record.contract_id, record.contract_id.order_line, picking_id, context=context)
-        return True
+    @api.one
+    def fun_finalize(self):
+        self.state = 'done'
+        self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
+        if self.stock_picking_id:
+            picking = [self.stock_picking_id.id]
+            self._do_enter_transfer_details(picking, self.weight_neto)
+
+    def _do_enter_transfer_details(self, picking, weight_neto, context=None):
+        if not context:
+            context = {}
+        else:
+            context = context.copy()
+        context.update({
+            'active_model': self._name,
+            'active_ids': picking,
+            'active_id': len(picking) and picking[0] or False
+        })
+
+        created_id = self.env['stock.transfer_details'].create({'picking_id': len(picking) and picking[0] or False})
+        for item in created_id.item_ids:
+            item.quantity = weight_neto
+        created_id.do_detailed_transfer()
+        # return self.env['stock.transfer_details'].wizard_view(created_id)
