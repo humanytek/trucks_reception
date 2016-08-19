@@ -28,8 +28,7 @@ class TrucksReception(models.Model):
     pending = fields.Float(readonly=True, compute="_compute_pending", store=False)
 
     product_id = fields.Many2one('product.product', compute="_compute_product_id", store=False, readonly=True)
-    dest = fields.Many2one('stock.location', related="contract_id.location_id", readonly=True)
-    location = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', related="contract_id.location_id", readonly=True)
 
     humidity = fields.Float(min_value=0)
     density = fields.Float(min_value=0)
@@ -53,7 +52,7 @@ class TrucksReception(models.Model):
     kilos_humidity = fields.Float(compute="_compute_kilos_humidity", store=False)
     weight_neto_analized = fields.Float(compute="_compute_weight_neto_analized", store=False)
 
-    stock_picking = fields.Many2one('stock.picking', readonly=True)
+    stock_picking_id = fields.Many2one('stock.picking', readonly=True)
 
     _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
 
@@ -142,9 +141,17 @@ class TrucksReception(models.Model):
     def fun_unload(self):
         self.state = 'weight_output'
 
-    @api.multi
-    def write(self, values, context=None):
-        res = super(TrucksReception, self).write(values)
-        if self.state == 'done':
-            zxc = 'zxc' # TODO
-        return res
+    # @api.one
+    def fun_finalize(self, cr, uid, ids, context=None):
+        for record in self.browse(cr, uid, ids, context=context):
+                self.write(cr, uid, ids, {'state': 'done'}, context=context)
+                picking_vals = {
+                    'picking_type_id': record.contract_id.picking_type_id.id,
+                    'partner_id': record.contract_id.partner_id.id,
+                    'date': record.contract_id.date_order,
+                    'origin': record.contract_id.name
+                }
+                picking_id = self.pool.get('stock.picking').create(cr, uid, picking_vals, context=context)
+                self.write(cr, uid, ids, {'stock_picking_id': picking_id}, context=context)
+                self.pool.get('purchase.order')._create_stock_moves(cr, uid, record.contract_id, record.contract_id.order_line, picking_id, context=context)
+        return True

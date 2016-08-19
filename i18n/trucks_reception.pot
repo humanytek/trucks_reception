@@ -77,7 +77,7 @@ msgid "Density"
 msgstr ""
 
 #. module: trucks_reception
-#: field:trucks.reception,dest:0
+#: field:trucks.reception,location_id:0
 msgid "Destination"
 msgstr ""
 
@@ -140,11 +140,6 @@ msgid "Kilos impurities"
 msgstr ""
 
 #. module: trucks_reception
-#: field:trucks.reception,location:0
-msgid "Location"
-msgstr ""
-
-#. module: trucks_reception
 #: view:trucks.reception:trucks_reception.trucks_reception_form_view
 #: field:trucks.reception,pending:0
 msgid "Pending"
@@ -167,7 +162,7 @@ msgid "State"
 msgstr ""
 
 #. module: trucks_reception
-#: field:trucks.reception,stock_picking:0
+#: field:trucks.reception,stock_picking_id:0
 msgid "Stock picking"
 msgstr ""
 

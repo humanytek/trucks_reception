@@ -19,6 +19,7 @@
                 <form string="Trucks Reception Form">
                     <header>
                         <button name="fun_unload" type="object" string="Unload" states="unloading" class="oe_highlight"/>
+                        <button name="fun_finalize" type="object" string="Finalize" states="weight_output" class="oe_highlight"/>
                         <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
@@ -60,8 +61,7 @@
                         </group>
                         <group>
                             <field name="product_id"/>
-                            <field name="dest"/>
-                            <field name="location"/>
+                            <field name="location_id"/>
                         </group>
                         <button type="object" string="Update" states="analysis" class="oe_highlight"/>
                         <group col="3">
@@ -105,7 +105,7 @@
                             </group>
                         </group>
                         <group>
-                            <field name="stock_picking" attrs="{'invisible': [('state', 'not in', 'done')]}"/>
+                            <field name="stock_picking_id" attrs="{'invisible': [('state', 'not in', 'done')]}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
