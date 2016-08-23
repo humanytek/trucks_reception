@@ -171,7 +171,7 @@ class TrucksReception(models.Model):
                 'packop_id': op.id,
                 'product_id': op.product_id.id,
                 'product_uom_id': op.product_uom_id.id,
-                'quantity': weight_neto,
+                'quantity': weight_neto/1000,
                 'package_id': op.package_id.id,
                 'lot_id': op.lot_id.id,
                 'sourceloc_id': op.location_id.id,
