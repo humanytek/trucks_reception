@@ -141,27 +141,47 @@ class TrucksReception(models.Model):
     def fun_unload(self):
         self.state = 'weight_output'
 
-    @api.one
+    @api.multi
     def fun_finalize(self):
         self.state = 'done'
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            self._do_enter_transfer_details(picking, self.weight_neto)
+            return self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto, self.location_id)
 
-    def _do_enter_transfer_details(self, picking, weight_neto, context=None):
+    @api.multi
+    def _do_enter_transfer_details(self, picking_id, picking, weight_neto, location_id, context=None):
         if not context:
             context = {}
         else:
             context = context.copy()
         context.update({
             'active_model': self._name,
-            'active_ids': picking,
-            'active_id': len(picking) and picking[0] or False
+            'active_ids': picking_id,
+            'active_id': len(picking_id) and picking_id[0] or False
         })
 
-        created_id = self.env['stock.transfer_details'].create({'picking_id': len(picking) and picking[0] or False})
-        for item in created_id.item_ids:
-            item.quantity = weight_neto
-        created_id.do_detailed_transfer()
-        # return self.env['stock.transfer_details'].wizard_view(created_id)
+        created_id = self.env['stock.transfer_details'].create({'picking_id': len(picking_id) and picking_id[0] or False})
+
+        items = []
+        # for op in picking.pack_operation_ids:
+        #     item = {
+        #         'packop_id': op.id,
+        #         'product_id': op.product_id.id,
+        #         'product_uom_id': op.product_uom_id.id,
+        #         'quantity': op.product_qty,
+        #         'package_id': op.package_id.id,
+        #         'lot_id': op.lot_id.id,
+        #         'sourceloc_id': op.location_id.id,
+        #         'destinationloc_id': op.location_dest_id.id,
+        #         'result_package_id': op.result_package_id.id,
+        #         'date': op.date,
+        #         'owner_id': op.owner_id.id,
+        #     }
+        #     if op.product_id:
+        #         items.append(item)
+        #     elif op.package_id:
+        #         packs.append(item)
+        created_id.item_ids = items
+        # created_id.do_detailed_transfer()
+        return created_id.wizard_view()
