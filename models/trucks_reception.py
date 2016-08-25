@@ -201,3 +201,9 @@ class TrucksReception(models.Model):
 
         res = super(TrucksReception, self).write(vals)
         return res
+
+    @api.model
+    def create(self, vals):
+        vals['state'] = 'weight_input'
+        res = super(TrucksReception, self).create(vals)
+        return res
