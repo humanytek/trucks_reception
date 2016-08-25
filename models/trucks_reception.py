@@ -147,10 +147,10 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto, self.location_id)
+            self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
 
     @api.multi
-    def _do_enter_transfer_details(self, picking_id, picking, weight_neto, location_id, context=None):
+    def _do_enter_transfer_details(self, picking_id, picking, weight_neto_analized, location_id, context=None):
         if not context:
             context = {}
         else:
@@ -171,7 +171,7 @@ class TrucksReception(models.Model):
                 'packop_id': op.id,
                 'product_id': op.product_id.id,
                 'product_uom_id': op.product_uom_id.id,
-                'quantity': weight_neto/1000,
+                'quantity': weight_neto_analized/1000,
                 'package_id': op.package_id.id,
                 'lot_id': op.lot_id.id,
                 'sourceloc_id': op.location_id.id,
