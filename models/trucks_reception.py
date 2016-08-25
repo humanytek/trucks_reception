@@ -186,3 +186,18 @@ class TrucksReception(models.Model):
                 packs.append(item)
         created_id.item_ids = items
         created_id.do_detailed_transfer()
+
+    @api.multi
+    def write(self, vals, recursive=None):
+        if not recursive:
+            if self.state == 'analysis':
+                self.write({'state': 'weight_input'}, 'r')
+            elif self.state == 'weight_input':
+                self.write({'state': 'unloading'}, 'r')
+            elif self.state == 'unloading':
+                self.write({'state': 'weight_output'}, 'r')
+            elif self.state == 'weight_output':
+                self.write({'state': 'done'}, 'r')
+
+        res = super(TrucksReception, self).write(vals)
+        return res
