@@ -19,12 +19,6 @@
                             <field name="default_max_input_per_contract"/>
                         </div>
                     </group>
-                    <group string="Damaged kilos">
-                        <div>
-                            <label for="default_damaged_location"/>
-                            <field name="default_damaged_location"/>
-                        </div>
-                    </group>
                 </form>
             </field>
         </record>

@@ -16,6 +16,7 @@ class TrucksReception(models.Model):
     ], default='analysis')
 
     contract_id = fields.Many2one('purchase.order')
+    auxiliary_contract = fields.Many2one('purchase.order')
     contract_type = fields.Selection(readonly=True, related="contract_id.contract_type")
     partner_id = fields.Many2one('res.partner', related="contract_id.partner_id", readonly=True)
     street = fields.Char(readonly=True, related='partner_id.street')
@@ -152,7 +153,15 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
+            if self.weight_neto_analized <= self.max_input_per_contract:
+                self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
+            else:
+                self._do_enter_transfer_details(picking, self.stock_picking_id, self.max_input_per_contract, self.location_id)
+                self.auxiliary_contract = self.env['purchase.order'].create({'partner_id': self.contract_id.partner_id.id,
+                                                                             'location_id': self.contract_id.location_id.id,
+                                                                             'pricelist_id': self.contract_id.pricelist_id.id})
+                self.auxiliary_contract.order_line = self.contract_id.order_line
+                self.auxiliary_contract.order_line[0].product_qty = self.weight_neto_analized - self.max_input_per_contract
 
     @api.multi
     def fun_ship(self):
