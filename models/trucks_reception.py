@@ -161,7 +161,7 @@ class TrucksReception(models.Model):
                                                                              'location_id': self.contract_id.location_id.id,
                                                                              'pricelist_id': self.contract_id.pricelist_id.id})
                 self.auxiliary_contract.order_line = self.contract_id.order_line
-                self.auxiliary_contract.order_line[0].product_qty = self.weight_neto_analized - self.max_input_per_contract
+                self.auxiliary_contract.order_line[0].product_qty = (self.weight_neto_analized - self.max_input_per_contract) / 1000
 
     @api.multi
     def fun_ship(self):
