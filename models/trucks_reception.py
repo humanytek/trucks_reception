@@ -54,6 +54,9 @@ class TrucksReception(models.Model):
 
     stock_picking_id = fields.Many2one('stock.picking', readonly=True)
 
+    max_input_per_contract = fields.Float()
+    damaged_location = fields.Many2one('stock.location')
+
     _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
 
     @api.one

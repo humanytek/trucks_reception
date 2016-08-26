@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="trucks_reception_cfg" model="ir.ui.view">
+            <field name="name">trucks.reception.cfg</field>
+            <field name="model">trucks.reception.cfg</field>
+            <field name="arch" type="xml">
+                <form string="Trucks reception config" class="oe_form_configuration">
+                    <header>
+                        <button string="Save" type="object"
+                            name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object"
+                            name="cancel" class="oe_link"/>
+                    </header>
+                    <group string="Contract">
+                        <div>
+                            <label for="default_max_input_per_contract"/>
+                            <field name="default_max_input_per_contract"/>
+                        </div>
+                    </group>
+                    <group string="Damaged kilos">
+                        <div>
+                            <label for="default_damaged_location"/>
+                            <field name="default_damaged_location"/>
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="trucks_reception_cfg_action" model="ir.actions.act_window">
+            <field name="name">trucks.reception.cfg</field>
+            <field name="res_model">trucks.reception.cfg</field>
+            <field name="view_id" ref="trucks_reception_cfg"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="trucks_reception_cfg_menu" name="Trucks reception config"
+            parent="base.menu_config" action="trucks_reception_cfg_action"/>
+    </data>
+</openerp>
