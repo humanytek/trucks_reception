@@ -124,7 +124,7 @@ class TrucksReception(models.Model):
     @api.one
     @api.depends('contract_id', 'weight_neto_analized')
     def _compute_delivered(self):
-        self.delivered = sum(record.weight_neto_anlized for record in self.contract_id.trucks_reception_ids) / 1000
+        self.delivered = sum(record.weight_neto_analized for record in self.contract_id.trucks_reception_ids) / 1000
 
     @api.one
     @api.depends('contract_id')
