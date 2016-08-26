@@ -19,6 +19,8 @@ class TrucksReception(models.Model):
     contract_type = fields.Selection(readonly=True, related="contract_id.contract_type")
     partner_id = fields.Many2one('res.partner', related="contract_id.partner_id", readonly=True)
     street = fields.Char(readonly=True, related='partner_id.street')
+    shipped = fields.Boolean(related='contract_id.shipped')
+    contract_state = fields.Selection(related="contract_id.state")
 
     driver = fields.Char()
     car_plates = fields.Char()
@@ -145,12 +147,18 @@ class TrucksReception(models.Model):
         self.state = 'weight_output'
 
     @api.multi
-    def fun_finalize(self):
+    def fun_transfer(self):
         self.state = 'done'
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
             self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
+
+    @api.multi
+    def fun_ship(self):
+        stock_picking_id_cancel = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
+        if stock_picking_id_cancel:
+            stock_picking_id_cancel.action_cancel()
 
     @api.multi
     def _do_enter_transfer_details(self, picking_id, picking, weight_neto_analized, location_id, context=None):

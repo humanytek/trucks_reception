@@ -17,9 +17,22 @@
             <field name="model">trucks.reception</field>
             <field name="arch" type="xml">
                 <form string="Trucks Reception Form">
+                    <field name="shipped" invisible="1"/>
+                    <field name="contract_state" invisible="1"/>
                     <header>
                         <button name="fun_unload" type="object" string="Unload" states="unloading" class="oe_highlight"/>
-                        <button name="fun_finalize" type="object" string="Finalize" states="weight_output" class="oe_highlight"/>
+                        <button name="fun_transfer" type="object" string="Transfer" class="oe_highlight"
+                            attrs="{'invisible': ['|',
+                                                        ('contract_state', 'in', ['except_picking']),
+                                                        '|',
+                                                            ('shipped', '=', True),
+                                                            ('state', 'not in', ['done'])]}"/>
+                        <button name="fun_ship" type="object" string="Finalize"
+                            attrs="{'invisible': ['|',
+                                                        ('contract_state', 'in', ['except_picking']),
+                                                        '|',
+                                                            ('shipped', '=', True),
+                                                            ('state', 'not in', ['done'])]}"/>
                         <field name="state" widget="statusbar" readonly="1"/>
                     </header>
                     <sheet>
