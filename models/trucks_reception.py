@@ -185,8 +185,6 @@ class TrucksReception(models.Model):
             }
             if op.product_id:
                 items.append(item)
-            elif op.package_id:
-                packs.append(item)
         created_id.item_ids = items
         created_id.do_detailed_transfer()
 
