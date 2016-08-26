@@ -21,8 +21,8 @@
                     </group>
                     <group string="Damaged kilos">
                         <div>
-                            <label for="default_damaged_location"/>
-                            <field name="default_damaged_location"/>
+                            <label for="damaged_location"/>
+                            <field name="damaged_location"/>
                         </div>
                     </group>
                 </form>

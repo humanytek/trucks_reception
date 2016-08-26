@@ -124,7 +124,7 @@ class TrucksReception(models.Model):
     @api.one
     @api.depends('contract_id', 'weight_neto_analized')
     def _compute_delivered(self):
-        self.delivered = sum(record.weight_neto_anlized for record in self.contract_id.trucks_reception_ids) / 1000
+        self.delivered = sum(record.weight_neto_analized for record in self.contract_id.trucks_reception_ids) / 1000
 
     @api.one
     @api.depends('contract_id')
@@ -150,10 +150,10 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
+            self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto, self.weight_neto_analized, self.location_id, self.damaged_location)
 
     @api.multi
-    def _do_enter_transfer_details(self, picking_id, picking, weight_neto_analized, location_id, context=None):
+    def _do_enter_transfer_details(self, picking_id, picking, weight_neto, weight_neto_analized, location_id, damaged_location, context=None):
         if not context:
             context = {}
         else:
@@ -185,6 +185,21 @@ class TrucksReception(models.Model):
             }
             if op.product_id:
                 items.append(item)
+                if weight_neto > weight_neto_analized and damaged_location:
+                    item2 = {
+                        'packop_id': op.id,
+                        'product_id': op.product_id.id,
+                        'product_uom_id': op.product_uom_id.id,
+                        'quantity': (weight_neto - weight_neto_analized) / 1000,
+                        'package_id': op.package_id.id,
+                        'lot_id': op.lot_id.id,
+                        'sourceloc_id': op.location_id.id,
+                        'destinationloc_id': damaged_location.id,
+                        'result_package_id': op.result_package_id.id,
+                        'date': op.date,
+                        'owner_id': op.owner_id.id,
+                    }
+                    items.append(item2)
         created_id.item_ids = items
         created_id.do_detailed_transfer()
 

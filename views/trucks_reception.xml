@@ -105,6 +105,7 @@
                             </group>
                         </group>
                         <group>
+                            <field name="damaged_location"/>
                             <field name="stock_picking_id" attrs="{'invisible': [('state', 'not in', 'done')]}"/>
                         </group>
                     </sheet>
