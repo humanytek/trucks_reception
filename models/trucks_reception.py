@@ -153,7 +153,7 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            if self.weight_neto_analized <= self.max_input_per_contract or self.max_input_per_contract == 0:
+            if self.weight_neto_analized <= self.max_input_per_contract * 1000 or self.max_input_per_contract == 0:
                 self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
             else:
                 self._do_enter_transfer_details(picking, self.stock_picking_id, self.max_input_per_contract * 1000, self.location_id)
