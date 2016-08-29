@@ -153,15 +153,23 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            if self.weight_neto_analized <= self.max_input_per_contract:
+            if self.weight_neto_analized <= self.max_input_per_contract or self.max_input_per_contract == 0:
                 self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
             else:
-                self._do_enter_transfer_details(picking, self.stock_picking_id, self.max_input_per_contract, self.location_id)
+                self._do_enter_transfer_details(picking, self.stock_picking_id, self.max_input_per_contract * 1000, self.location_id)
                 self.auxiliary_contract = self.env['purchase.order'].create({'partner_id': self.contract_id.partner_id.id,
                                                                              'location_id': self.contract_id.location_id.id,
                                                                              'pricelist_id': self.contract_id.pricelist_id.id})
-                self.auxiliary_contract.order_line = self.contract_id.order_line
-                self.auxiliary_contract.order_line[0].product_qty = (self.weight_neto_analized - self.max_input_per_contract) / 1000
+                self.auxiliary_contract.order_line = self.env['purchase.order.line'].create({
+                    'order_id': self.auxiliary_contract.id,
+                    'product_id': self.contract_id.order_line[0].product_id.id,
+                    'name': self.contract_id.order_line[0].name,
+                    'date_planned': self.contract_id.order_line[0].date_planned,
+                    'company_id': self.contract_id.order_line[0].company_id.id,
+                    'product_qty': (self.weight_neto_analized - self.max_input_per_contract*1000)/1000,
+                    'price_unit': self.contract_id.order_line[0].price_unit,
+                })
+                self.fun_ship()
 
     @api.multi
     def fun_ship(self):
