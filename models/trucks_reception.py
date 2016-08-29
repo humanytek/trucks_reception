@@ -165,7 +165,7 @@ class TrucksReception(models.Model):
                     'name': self.contract_id.order_line[0].name,
                     'date_planned': self.contract_id.order_line[0].date_planned,
                     'company_id': self.contract_id.order_line[0].company_id.id,
-                    'product_qty': (self.weight_neto_analized - self.hired)/1000,
+                    'product_qty': (self.weight_neto_analized/1000 - self.hired),
                     'price_unit': self.contract_id.order_line[0].price_unit,
                 })
                 self.fun_ship()
