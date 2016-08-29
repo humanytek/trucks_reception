@@ -57,7 +57,6 @@ class TrucksReception(models.Model):
 
     stock_picking_id = fields.Many2one('stock.picking', readonly=True)
 
-    max_input_per_contract = fields.Float()
     damaged_location = fields.Many2one('stock.location')
 
     _defaults = {'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'reg_code'), }
@@ -153,10 +152,10 @@ class TrucksReception(models.Model):
         self.stock_picking_id = self.env['stock.picking'].search([('origin', '=', self.contract_id.name), ('state', '=', 'assigned')], order='date', limit=1)
         if self.stock_picking_id:
             picking = [self.stock_picking_id.id]
-            if self.weight_neto_analized <= self.max_input_per_contract * 1000 or self.max_input_per_contract == 0:
+            if self.weight_neto_analized <= self.hired:
                 self._do_enter_transfer_details(picking, self.stock_picking_id, self.weight_neto_analized, self.location_id)
             else:
-                self._do_enter_transfer_details(picking, self.stock_picking_id, self.max_input_per_contract * 1000, self.location_id)
+                self._do_enter_transfer_details(picking, self.stock_picking_id, self.hired, self.location_id)
                 self.auxiliary_contract = self.env['purchase.order'].create({'partner_id': self.contract_id.partner_id.id,
                                                                              'location_id': self.contract_id.location_id.id,
                                                                              'pricelist_id': self.contract_id.pricelist_id.id})
@@ -166,7 +165,7 @@ class TrucksReception(models.Model):
                     'name': self.contract_id.order_line[0].name,
                     'date_planned': self.contract_id.order_line[0].date_planned,
                     'company_id': self.contract_id.order_line[0].company_id.id,
-                    'product_qty': (self.weight_neto_analized - self.max_input_per_contract*1000)/1000,
+                    'product_qty': (self.weight_neto_analized - self.hired)/1000,
                     'price_unit': self.contract_id.order_line[0].price_unit,
                 })
                 self.fun_ship()
